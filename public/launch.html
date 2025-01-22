@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch</title>
+</head>
+<body>
+    <h1>Launch Page</h1>
+    <button id="launchButton">Launch</button>
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = () => {
+            console.log('WebSocket connection opened');
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        document.getElementById('launchButton').addEventListener('click', () => {
+            if (ws.readyState === WebSocket.OPEN) {
+                // console.log("onmessage")
+                ws.send('launch');
+            }
+        });
+    </script>
+</body>
+</html>

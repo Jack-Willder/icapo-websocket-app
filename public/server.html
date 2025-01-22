@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 40px;
+            margin: 0;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        #content {
+            margin-top: 40px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        video {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Additional styling for responsiveness */
+        @media (max-width: 600px) {
+            video {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to ICAPO</h1>
+    <p>Press the Launch button to see the magic!</p>
+    <div id="content">
+        <img id="qrcode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example" alt="QR Code">
+    </div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onopen = () => {
+            console.log('WebSocket connection opened');
+        };
+
+        ws.onmessage = (event) => {
+            if (event.data === 'replaceWithVideo') {
+                const contentDiv = document.getElementById('content');
+                
+                // Create a new video element
+                const videoElement = document.createElement('video');
+                videoElement.setAttribute('controls', '');
+                videoElement.setAttribute('autoplay', '');
+                videoElement.setAttribute('muted', '');  // Add the muted attribute to allow autoplay
+                
+                const source = document.createElement('source');
+                source.setAttribute('src', 'sample.mp4');
+                source.setAttribute('type', 'video/mp4');
+                
+                videoElement.appendChild(source);
+                contentDiv.innerHTML = ''; // Clear previous content
+                contentDiv.appendChild(videoElement);
+                
+                videoElement.play(); // Ensure the video plays automatically
+            }
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+    </script>
+
+</body>
+</html>
