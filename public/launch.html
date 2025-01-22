@@ -4,12 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launch</title>
+    <style>
+
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 40px;
+            margin: 0;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        #content {
+            margin-top: 40px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #logo {
+            width: 80vh;
+            aspect-ratio: auto;
+            height: auto;
+        }
+
+        #declaration {
+            width: 83vh;
+            aspect-ratio: auto;
+            height: auto;
+        }
+
+    </style>
+
+    <style>
+        /* CSS */
+        .button-85 {
+        --multiplier: 2;
+        font-size: calc(1em * var(--multiplier));
+        padding: calc(0.6em * var(--multiplier)) calc(2em * var(--multiplier));
+        border: none;
+        outline: none;
+        color: rgb(255, 255, 255);
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        }
+
+        .button-85:before {
+        content: "";
+        background: linear-gradient(
+            45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000
+        );
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing-button-85 20s linear infinite;
+        transition: opacity 0.3s ease-in-out;
+        border-radius: 10px;
+        }
+
+        @keyframes glowing-button-85 {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 400% 0;
+        }
+        100% {
+            background-position: 0 0;
+        }
+        }
+
+        .button-85:after {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #222;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+        }
+
+    </style>
 </head>
 <body>
     <h1>Launch Page</h1>
-    <button id="launchButton">Launch</button>
+    <p>Press Launch to start the Event!</p>
+    <!-- <button id="launchButton" class="button-49">Launch</button> -->
+    <button id="launchButton" class="button-85">Launch</button>
     <script>
-        const ws = new WebSocket('ws://localhost:3000');
+        const ws = new WebSocket('ws://16.16.95.66:3000');
 
         ws.onopen = () => {
             console.log('WebSocket connection opened');
